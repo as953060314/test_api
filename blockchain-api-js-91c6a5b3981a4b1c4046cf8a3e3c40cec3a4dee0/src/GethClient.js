@@ -31,7 +31,8 @@ module.exports = class GethClient {
             params: params,
             id: this.requestCounter++
         };
-
+        console.log("READY TO CALL");
+        console.log(this.url);
         try {
             const response = await fetch(this.url, {
                 timeout: this.timeout,
@@ -51,7 +52,8 @@ module.exports = class GethClient {
             } else {
                 throw Error('sonmapi_node_fatal_error');
             }
-        } catch(err) {
+        } catch (err) {
+            console.log("CALL FAIL");
             console.error(err.message);
 
             const error = this.errors[err.message] ? this.errors[err.message] : 'sonmapi_unknown_error';
@@ -100,6 +102,8 @@ module.exports = class GethClient {
     }
 
     getRawTransaction(tx) {
+        console.log(this.privateKey)
+        console.log("You are a bad boy")
         const privateKey = Buffer.from(this.privateKey, 'hex');
         const signer = new EthereumTx(tx);
         signer.sign(privateKey);
